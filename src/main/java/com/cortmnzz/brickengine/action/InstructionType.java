@@ -3,10 +3,10 @@ package com.cortmnzz.brickengine.action;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("deprecation")
 public enum InstructionType {
     SOUND(instructionType -> {
         instructionType.getPlayerList().forEach(player -> player.playSound(player.getLocation(),
@@ -21,7 +21,7 @@ public enum InstructionType {
     }),
     TITLE(instructionType -> {
         instructionType.getPlayerList().forEach(player -> player.sendTitle((String) instructionType.getInstructionProperty().get(InstructionProperty.TITLE_TITLE),
-                (String) instructionType.getInstructionProperty().get(InstructionProperty.TITLE_SUBTITLE)));
+                (String) instructionType.getProperty(InstructionProperty.TITLE_SUBTITLE)));
 
         instructionType.getEnd().perform();
     }),
@@ -43,7 +43,7 @@ public enum InstructionType {
 
         instructionType.getEnd().perform();
     });
-    
+
     @Getter
     private final Consumer<SequenceAction> consumer;
 

@@ -23,23 +23,25 @@ public class SequenceAction {
     @Expose private Runnable runnable;
     @Expose private Consumer<Player> consumer;
 
-    @Expose private HashMap<InstructionType, ?> instructionType;
+    @Expose private final InstructionType type;
+    @Expose private HashMap<InstructionProperty, ?> instructionProperty;
 
-    public SequenceAction() {
+    public SequenceAction(InstructionType type) {
+        this.type = type;
+
         this.playerList = Bukkit.getServer().getOnlinePlayers().stream()
                 .filter(player -> !player.hasPermission("")).collect(Collectors.toList());
 
         this.next = new ArrayList<>();
-
-        this.instructionType = new HashMap<>();
+        this.instructionProperty = new HashMap<>();
     }
     public void addNext(SequenceAction sequenceAction) {
         this.next.add(sequenceAction);
     }
-    public Object getProperty(InstructionType instructionType) {
-        return this.instructionType.get(instructionType);
+    public Object getProperty(InstructionProperty instructionProperty) {
+        return this.instructionProperty.get(instructionProperty);
     }
     public void perform() {
-        this.instructionType.forEach((key, value) -> key.getConsumer().accept(this));
+        this.instructionProperty.forEach((key, value) -> this.type.getConsumer().accept(this));
     }
 }
