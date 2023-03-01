@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Data
@@ -19,7 +20,10 @@ public class SequenceAction {
     @Expose private long delay;
     @Expose private boolean stopSequenceOnException;
 
-    @Expose private HashMap<InstructionProperty, ?> instructionProperty;
+    @Expose private Runnable runnable;
+    @Expose private Consumer<Player> consumer;
+
+    @Expose private HashMap<InstructionType, ?> instructionType;
 
     public SequenceAction() {
         this.playerList = Bukkit.getServer().getOnlinePlayers().stream()
@@ -27,15 +31,15 @@ public class SequenceAction {
 
         this.next = new ArrayList<>();
 
-        this.instructionProperty = new HashMap<>();
+        this.instructionType = new HashMap<>();
     }
     public void addNext(SequenceAction sequenceAction) {
         this.next.add(sequenceAction);
     }
-    public Object getProperty(InstructionProperty instructionProperty) {
-        return this.instructionProperty.get(instructionProperty);
+    public Object getProperty(InstructionType instructionType) {
+        return this.instructionType.get(instructionType);
     }
     public void perform() {
-
+        this.instructionType.forEach((key, value) -> key.getConsumer().accept(this));
     }
 }

@@ -42,19 +42,8 @@ public enum InstructionType {
         });
 
         instructionType.getEnd().perform();
-    }), RUNNABLE(instructionType -> {
-        ((Runnable) instructionType.getProperty(InstructionProperty.COMMAND_PLAYER)).run();
-
-        instructionType.getEnd().perform();
-    }), PLAYER_CONSUMER(instructionType -> {
-        instructionType.getPlayerList().forEach(player -> {
-            ((Consumer<Player>) instructionType.getProperty(InstructionProperty.PLAYER_CONSUMER)).accept(player);
-        });
-
-        instructionType.getEnd().perform();
     });
-
-
+    
     @Getter
     private final Consumer<SequenceAction> consumer;
 
