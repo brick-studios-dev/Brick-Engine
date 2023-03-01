@@ -5,6 +5,7 @@ import lombok.Getter;
 public enum InstructionProperty {
     SOUND("sound"),
     MESSAGE("message"),
+    CHAT("chat"),
     TITLE_TITLE("title"),
     TITLE_SUBTITLE("subtitle"),
     COMMAND("command"),

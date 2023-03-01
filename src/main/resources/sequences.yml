@@ -1,0 +1,7 @@
+enabled:
+  start:
+    message: "This is a test!"
+    sound: "CLICK"
+    next:
+      delay: 10
+      chat: "hello!"

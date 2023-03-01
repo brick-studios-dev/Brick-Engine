@@ -19,6 +19,11 @@ public enum InstructionType {
 
         instructionType.getEnd().perform();
     }),
+    CHAT(instructionType -> {
+        instructionType.getPlayerList().forEach(player -> player.chat((String) instructionType.getInstructionProperty().get(InstructionProperty.CHAT)));
+
+        instructionType.getEnd().perform();
+    }),
     TITLE(instructionType -> {
         instructionType.getPlayerList().forEach(player -> player.sendTitle((String) instructionType.getInstructionProperty().get(InstructionProperty.TITLE_TITLE),
                 (String) instructionType.getProperty(InstructionProperty.TITLE_SUBTITLE)));
