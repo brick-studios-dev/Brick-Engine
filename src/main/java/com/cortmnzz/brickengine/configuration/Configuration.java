@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -13,7 +14,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Configuration extends YamlConfiguration {
 
-    private File file;
+    @Getter private final File file;
 
     public Configuration(File file) {
         this.file = file;
