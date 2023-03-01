@@ -1,0 +1,6 @@
+name: BrickEngine
+version: '${project.version}'
+main: com.cortmnzz.brickengine.BrickEngine
+api-version: 1.19
+load: STARTUP
+authors: [ Ailakks ]
