@@ -23,10 +23,12 @@ public class SequenceAction {
     @Expose private Runnable runnable;
     @Expose private Consumer<Player> consumer;
 
+    @Expose private final String name;
     @Expose private final InstructionType type;
     @Expose private HashMap<InstructionProperty, ?> instructionProperty;
 
-    public SequenceAction(InstructionType type) {
+    public SequenceAction(String name, InstructionType type) {
+        this.name = name;
         this.type = type;
 
         this.playerList = Bukkit.getServer().getOnlinePlayers().stream()

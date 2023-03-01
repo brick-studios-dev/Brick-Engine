@@ -8,16 +8,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SequenceLoader {
-    private static final Configuration configuration = BrickEngine.getInstance().getSequencesConfiguration();
-    private static final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+    private final Configuration configuration = BrickEngine.getInstance().getSequencesConfiguration();
+    private final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 
-    private static final List<SequenceAction> sequenceActionList = new ArrayList<>();
+    private final List<SequenceAction> sequenceActionList = new ArrayList<>();
 
-    static {
+    public SequenceLoader() {
         Optional.ofNullable(configuration.getConfigurationSection("enabled")).ifPresent(enabled -> {
             enabled.getKeys(false).forEach(section -> {
                 try {
@@ -39,5 +41,9 @@ public class SequenceLoader {
                 }
             });
         });
+    }
+
+    public Optional<SequenceAction> getSequenceAction(String name) {
+        return this.sequenceActionList.stream().filter(sequenceAction -> sequenceAction.getName().equals(name)).findFirst();
     }
 }
