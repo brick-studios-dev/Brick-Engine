@@ -1,5 +1,7 @@
 package com.cortmnzz.brickengine;
 
+import co.aikar.commands.PaperCommandManager;
+import com.cortmnzz.brickengine.command.SequenceCommand;
 import com.cortmnzz.brickengine.configuration.Configuration;
 import com.cortmnzz.brickengine.configuration.ConfigurationManager;
 import com.cortmnzz.brickengine.sequence.SequenceLoader;
@@ -12,11 +14,16 @@ public final class BrickEngine extends JavaPlugin {
 
     @Getter private final Configuration sequencesConfiguration = ConfigurationManager.getConfig("sequences.yml");
 
+    @Getter private PaperCommandManager paperCommandManager;
+
     @Getter private SequenceLoader sequenceLoader;
 
     @Override
     public void onEnable() {
         instance = this;
+
+        this.paperCommandManager = new PaperCommandManager(this);
+        this.paperCommandManager.registerCommand(new SequenceCommand());
 
         this.sequenceLoader = new SequenceLoader();
     }

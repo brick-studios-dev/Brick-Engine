@@ -16,5 +16,12 @@ public class SequenceCommand extends BaseCommand {
     @CommandPermission("sequence.admin")
     private void start(Player player, String name) {
         Optional<SequenceAction> sequenceActionOptional = BrickEngine.getInstance().getSequenceLoader().getSequenceAction(name);
+
+        if (sequenceActionOptional.isPresent()) {
+            sequenceActionOptional.get().perform();
+            return;
+        }
+
+        player.sendMessage("no-sequence");
     }
 }
